@@ -1,0 +1,282 @@
+<!-- ========================= -->
+<!-- FILE : keranjang.html -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keranjang Belanja</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+:root{
+    --glass-bg:rgba(255,255,255,0.20);
+    --glass-border:rgba(255,255,255,0.35);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#FFB75E 0%,#ED8F03 100%);
+    min-height:100vh;
+    padding:20px;
+}
+
+.glass{
+    background:var(--glass-bg);
+    backdrop-filter:blur(15px);
+    -webkit-backdrop-filter:blur(15px);
+    border:1px solid var(--glass-border);
+    border-radius:20px;
+    box-shadow:0 8px 32px rgba(0,0,0,0.12);
+}
+
+.cart-frame{
+    max-width:850px;
+    margin:auto;
+    padding:25px;
+}
+
+.title{
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+}
+
+.cart-item{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.cart-item img{
+    width:90px;
+    height:90px;
+    object-fit:cover;
+    border-radius:15px;
+}
+
+.item-info{
+    flex:1;
+}
+
+.item-name{
+    font-size:18px;
+    font-weight:bold;
+    color:white;
+}
+
+.item-price{
+    color:#fff;
+    margin-top:5px;
+}
+
+.qty-control{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+}
+
+.qty-btn{
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.remove-btn{
+    border:none;
+    background:#ff3f34;
+    color:white;
+    padding:8px 14px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.total-box{
+    margin-top:25px;
+    padding:20px;
+    text-align:center;
+}
+
+.total-price{
+    font-size:28px;
+    color:white;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.checkout-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:white;
+    color:#ff8c00;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.empty{
+    text-align:center;
+    color:white;
+    padding:50px 0;
+}
+
+.back-btn{
+    display:inline-block;
+    margin-bottom:20px;
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+
+    .cart-item{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .item-info{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="cart-frame glass">
+
+    <a href="index.html" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Kembali
+    </a>
+
+    <h1 class="title">Keranjang Belanja</h1>
+
+    <div id="cart-container"></div>
+
+    <div class="total-box glass">
+        <div class="total-price" id="total-price">
+            Total : Rp0
+        </div>
+
+        <button class="checkout-btn">
+            Checkout Sekarang
+        </button>
+    </div>
+
+</div>
+
+<script>
+
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function renderCart(){
+
+    const container = document.getElementById("cart-container");
+
+    if(cart.length === 0){
+
+        container.innerHTML = `
+            <div class="empty">
+                <h2>Keranjang Masih Kosong</h2>
+            </div>
+        `;
+
+        document.getElementById("total-price").innerText = "Total : Rp0";
+        return;
+    }
+
+    let total = 0;
+
+    container.innerHTML = "";
+
+    cart.forEach((item,index)=>{
+
+        total += item.price * item.qty;
+
+        container.innerHTML += `
+        
+        <div class="cart-item glass">
+
+            <img src="${item.image}">
+
+            <div class="item-info">
+
+                <div class="item-name">${item.name}</div>
+
+                <div class="item-price">
+                    Rp${item.price.toLocaleString("id-ID")}
+                </div>
+
+                <div class="qty-control">
+
+                    <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
+
+                    <span>${item.qty}</span>
+
+                    <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
+
+                </div>
+
+            </div>
+
+            <button class="remove-btn" onclick="removeItem(${index})">
+                Hapus
+            </button>
+
+        </div>
+        
+        `;
+    });
+
+    document.getElementById("total-price").innerText =
+        "Total : Rp" + total.toLocaleString("id-ID");
+
+}
+
+function changeQty(index,change){
+
+    cart[index].qty += change;
+
+    if(cart[index].qty <= 0){
+        cart.splice(index,1);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    renderCart();
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    renderCart();
+}
+
+renderCart();
+
+</script>
+
+</body>
+</html>

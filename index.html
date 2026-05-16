@@ -1,0 +1,378 @@
+<!-- ========================= -->
+<!-- FILE : index.html -->
+<!-- ========================= -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Toko Es Jeruk Estetik</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root{
+            --orange-solid:#ff8c00;
+            --glass-bg:rgba(255,255,255,0.20);
+            --glass-border:rgba(255,255,255,0.35);
+            --text-dark:#4a2511;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+        }
+
+        body{
+            background:linear-gradient(135deg,#FFB75E 0%,#ED8F03 100%);
+            background-attachment:fixed;
+            color:var(--text-dark);
+            padding-bottom:50px;
+        }
+
+        .glass{
+            background:var(--glass-bg);
+            backdrop-filter:blur(15px);
+            -webkit-backdrop-filter:blur(15px);
+            border:1px solid var(--glass-border);
+            border-radius:20px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.12);
+        }
+
+        header{
+            position:sticky;
+            top:0;
+            width:100%;
+            padding:15px 5%;
+            z-index:1000;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            border-radius:0 0 20px 20px;
+        }
+
+        .logo{
+            height:50px;
+        }
+
+        .cart-container{
+            position:relative;
+            color:var(--text-dark);
+            text-decoration:none;
+            transition:0.3s;
+        }
+
+        .cart-container:hover{
+            transform:scale(1.08);
+        }
+
+        .cart-icon{
+            font-size:25px;
+        }
+
+        .cart-badge{
+            position:absolute;
+            top:-8px;
+            right:-10px;
+            background:#ff3f34;
+            color:white;
+            font-size:11px;
+            font-weight:bold;
+            padding:2px 6px;
+            border-radius:50%;
+        }
+
+        .hero-section{
+            text-align:center;
+            margin:30px auto;
+            padding:0 15px;
+        }
+
+        .hero-image{
+            width:1168px;
+            height:1752px;
+            max-width:100%;
+            height:auto;
+            border-radius:20px;
+        }
+
+        .main-container{
+            width:90%;
+            max-width:1200px;
+            margin:auto;
+        }
+
+        .section-title{
+            text-align:center;
+            font-size:28px;
+            color:white;
+            margin-bottom:20px;
+            text-shadow:1px 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .product-frame{
+            padding:20px;
+        }
+
+        .product-grid{
+            display:grid;
+            grid-template-columns:repeat(2,1fr);
+            gap:15px;
+        }
+
+        .product-card{
+            padding:15px;
+            text-align:center;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
+            animation:popIn .7s ease forwards;
+        }
+
+        .product-image{
+            width:100%;
+            height:160px;
+            object-fit:cover;
+            border-radius:12px;
+            margin-bottom:10px;
+        }
+
+        .product-name{
+            font-size:16px;
+            font-weight:700;
+            margin-bottom:5px;
+        }
+
+        .product-price{
+            color:white;
+            font-weight:bold;
+            font-size:18px;
+            margin-bottom:12px;
+        }
+
+        .btn-beli{
+            border:none;
+            padding:10px;
+            border-radius:30px;
+            font-weight:bold;
+            cursor:pointer;
+            background:white;
+            color:var(--orange-solid);
+            transition:0.3s;
+        }
+
+        .btn-beli:hover{
+            background:var(--orange-solid);
+            color:white;
+        }
+
+        .info-frame{
+            margin-top:35px;
+            padding:20px;
+            text-align:center;
+        }
+
+        .map-container{
+            width:100%;
+            height:350px;
+            border-radius:15px;
+            overflow:hidden;
+            margin-top:15px;
+        }
+
+        .map-container iframe{
+            width:100%;
+            height:100%;
+            border:none;
+        }
+
+        .social-buttons{
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:15px;
+            margin-top:15px;
+        }
+
+        .btn-social{
+            padding:10px 25px;
+            border-radius:30px;
+            color:white;
+            text-decoration:none;
+            font-weight:bold;
+            transition:0.3s;
+        }
+
+        .btn-social:hover{
+            transform:translateY(-3px);
+        }
+
+        .btn-wa{
+            background:#25D366;
+        }
+
+        .btn-ig{
+            background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);
+        }
+
+        @keyframes popIn{
+            from{
+                opacity:0;
+                transform:translateY(20px) scale(.8);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+        }
+
+        @media (min-width:768px){
+            .product-grid{
+                grid-template-columns:repeat(4,1fr);
+            }
+
+            .product-image{
+                height:200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="glass">
+
+    <img src="image1.png" class="logo">
+
+    <a href="keranjang.html" class="cart-container">
+        <i class="fa-solid fa-basket-shopping cart-icon"></i>
+        <span class="cart-badge" id="cart-count">0</span>
+    </a>
+
+</header>
+
+<section class="hero-section">
+    <img src="gambar2.png" class="hero-image">
+</section>
+
+<main class="main-container">
+
+    <div class="product-frame glass">
+
+        <h2 class="section-title">PRODUK</h2>
+
+        <div class="product-grid">
+
+            <!-- PRODUK -->
+            <div class="product-card glass">
+                <img src="https://via.placeholder.com/300x300/ffa500/ffffff?text=Es+Jeruk" class="product-image">
+                <div class="product-name">Es Jeruk Murni</div>
+                <div class="product-price">Rp8.000</div>
+                <button class="btn-beli"
+                    onclick="addToCart('Es Jeruk Murni',8000,'https://via.placeholder.com/300x300/ffa500/ffffff?text=Es+Jeruk')">
+                    Beli
+                </button>
+            </div>
+
+            <div class="product-card glass">
+                <img src="https://via.placeholder.com/300x300/ffae42/ffffff?text=Yakult" class="product-image">
+                <div class="product-name">Es Jeruk Yakult</div>
+                <div class="product-price">Rp12.000</div>
+                <button class="btn-beli"
+                    onclick="addToCart('Es Jeruk Yakult',12000,'https://via.placeholder.com/300x300/ffae42/ffffff?text=Yakult')">
+                    Beli
+                </button>
+            </div>
+
+            <div class="product-card glass">
+                <img src="https://via.placeholder.com/300x300/f39c12/ffffff?text=Selasih" class="product-image">
+                <div class="product-name">Es Jeruk Selasih</div>
+                <div class="product-price">Rp10.000</div>
+                <button class="btn-beli"
+                    onclick="addToCart('Es Jeruk Selasih',10000,'https://via.placeholder.com/300x300/f39c12/ffffff?text=Selasih')">
+                    Beli
+                </button>
+            </div>
+
+            <div class="product-card glass">
+                <img src="https://via.placeholder.com/300x300/e67e22/ffffff?text=Hangat" class="product-image">
+                <div class="product-name">Jeruk Hangat</div>
+                <div class="product-price">Rp9.000</div>
+                <button class="btn-beli"
+                    onclick="addToCart('Jeruk Hangat',9000,'https://via.placeholder.com/300x300/e67e22/ffffff?text=Hangat')">
+                    Beli
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- LOCATION -->
+    <div class="info-frame glass">
+        <h2 class="section-title">LOCATION</h2>
+
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/d/embed?mid=1qNwOTQaPgM1F_cVq3UQyKcvUehEihLg"></iframe>
+        </div>
+    </div>
+
+    <!-- OUR VISIT -->
+    <div class="info-frame glass">
+        <h2 class="section-title">OUR VISIT</h2>
+
+        <div class="social-buttons">
+
+            <a href="https://wa.me/6285692107849" class="btn-social btn-wa" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+
+            <a href="https://www.instagram.com/ahzaaaa.hxiy?igsh=MW5zNGVscTJramVpcw==" class="btn-social btn-ig" target="_blank">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+
+        </div>
+    </div>
+
+</main>
+
+<script>
+
+    // UPDATE BADGE
+    function updateCartCount(){
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.getElementById("cart-count").innerText = cart.length;
+    }
+
+    // ADD TO CART
+    function addToCart(name, price, image){
+
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        let existing = cart.find(item => item.name === name);
+
+        if(existing){
+            existing.qty += 1;
+        } else {
+            cart.push({
+                name:name,
+                price:price,
+                image:image,
+                qty:1
+            });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        updateCartCount();
+
+        alert(name + " berhasil masuk keranjang!");
+    }
+
+    updateCartCount();
+
+</script>
+
+</body>
+</html>
